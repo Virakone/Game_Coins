@@ -11,10 +11,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MyGdxGame extends ApplicationAdapter {
 	SpriteBatch batch;
-	Texture wallpaperTexture;
+	Texture wallpaperTexture, cloudTexture;
 	private OrthographicCamera objOrthographicCamera;
 	private BitmapFont nameBitmapFont;
-	
+	private int xCloudAnInt, yCloudAnInt = 700;
+	private boolean cloudABoolean = true;
+
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -29,6 +31,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		nameBitmapFont = new BitmapFont();
 		nameBitmapFont.setColor(Color.RED);
 		nameBitmapFont.setScale(4);
+
+		//Setup Cloud
+		cloudTexture = new Texture("cloud.png");
 
 	}
 
@@ -47,9 +52,36 @@ public class MyGdxGame extends ApplicationAdapter {
 		//Draw Wallpaper
 		batch.draw(wallpaperTexture, 0 , 0);
 
+		//Draw Cloud
+		batch.draw(cloudTexture, xCloudAnInt, yCloudAnInt);
+
 		//Drawable BitmapFont
 		nameBitmapFont.draw(batch, "Coins Mario Game", 40, 760);
 
+
+
 		batch.end();
+
+		//Move Cloud
+		moveCloud();
+
+
 	}
+
+	private void moveCloud() {
+		if (cloudABoolean) {
+			if (xCloudAnInt < 1040) {
+				xCloudAnInt += 100 * Gdx.graphics.getDeltaTime();
+			} else {
+				cloudABoolean = !cloudABoolean;
+			}
+		} else {
+			if (xCloudAnInt >0) {
+				xCloudAnInt -= 100 * Gdx.graphics.getDeltaTime();
+			} else {
+				cloudABoolean = !cloudABoolean;
+			}
+		}
+
+	} //Move Cloud
 }
